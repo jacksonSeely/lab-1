@@ -1,10 +1,15 @@
 import express from 'express';
+import pagesRouter from './routes/pages.js';
+import apiRouter from './routes/api.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, web!');
+app.use('/', pagesRouter);
+app.use('/api', apiRouter);
+
+app.use((req, res) => {
+  res.status(404).send('Page not found.');
 });
 
 app.listen(PORT, () => {
